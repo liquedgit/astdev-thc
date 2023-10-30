@@ -52,9 +52,9 @@ export class CollisionBlock implements Entity{
     }
 
     render(ctx: CanvasRenderingContext2D): void {
-        ctx.fillStyle = 'red'
+        // ctx.fillStyle = 'red'
 
-        ctx.fillRect(this._x, this._y, this._width, this._height)    
+        // ctx.fillRect(this._x, this._y, this._width, this._height)    
     }
 
     

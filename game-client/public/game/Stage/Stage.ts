@@ -23,7 +23,7 @@ export class Stage extends Sprite{
                 }
             })
         })
-        this._entities.push(new Player(200,200,25,25, this._entities.slice()))
+        this._entities.push(new Player(200,200,25,25, this._entities.slice(), '../../assets/Sprites/01-King Human/Idle (78x58).png'))
     }
 
     public addEntities(newEntity : Entity){

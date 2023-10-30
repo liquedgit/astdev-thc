@@ -16,8 +16,15 @@ export class Player extends ShapeCollision implements Entity {
   private _velocityX :number;
   private _fallingState : FallingState;
   private _others : Entity[]
+  private _sprite : HTMLImageElement;
+  private _loaded : boolean;
+  private _framerate :number;
+  private _currentFrame :number;
+  private _frameBuffer :number;
+  private _frameElapsed :number;
 
-  constructor(x : number, y : number, width : number, height : number, other : Entity[]) {
+
+  constructor(x : number, y : number, width : number, height : number, other : Entity[], imgSrc : string) {
     super(x, y, width, height);
     this._idleState = new IdleState();
     this._walkingState = new WalkingState();
@@ -27,6 +34,19 @@ export class Player extends ShapeCollision implements Entity {
     this._velocityX = 0;
     this._velocityY = 0;
     this._others = other
+    this._sprite = new Image()
+    this._framerate = 11;
+    this._sprite.src = imgSrc
+    this._frameBuffer = 4;
+    this._frameElapsed = 0;
+    this._sprite.onload= ()=>{
+      this._loaded = true
+      this._width = this._sprite.width / this._framerate
+      this._height = this._sprite.height
+    }
+
+    this._currentFrame = 0
+    this._loaded = false
   }
   update(manager: GameManager): void {
 
@@ -41,13 +61,53 @@ export class Player extends ShapeCollision implements Entity {
   
     this._currState.update(this, manager)
   }
+
+
+
   render(ctx: CanvasRenderingContext2D): void {
     // console.log(this._y)
     // console.log(this._x)
     ctx.fillStyle = "blue"
     ctx.fillRect(this._x, this._y, this._width, this._height);
+
+    
+    if(this._loaded == false)return
+
+    const cropbox ={
+      position :{
+        x : this._width * this._currentFrame,
+        y:0
+      },
+      width : this._width,
+      height : this._height
+    }
+    ctx.drawImage(this._sprite,
+      cropbox.position.x,
+      cropbox.position.y,
+      cropbox.width,
+      cropbox.height,
+      this._x,
+      this._y,
+      this.width,
+      this.height)
+
+    this.updateFrames()
   }
   
+
+
+  updateFrames(){
+    this._frameElapsed++;
+    if(this._frameElapsed % this._frameBuffer === 0){
+      if(this._currentFrame < this._framerate-1){
+        this._currentFrame++
+      }else{
+        this._currentFrame = 0;
+  
+      }
+    }
+  }
+
   public checkCollide(){
     for (let other of this.others) {
       if (this.collidesWith(other)) {

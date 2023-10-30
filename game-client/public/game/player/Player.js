@@ -1,101 +1,156 @@
-import { ShapeCollision } from "../Collision/ShapeCollision";
 import { IdleState } from "./State/IdleState";
 import { JumpingState } from "./State/JumpingState";
 import { WalkingState } from "./State/WalkingState";
 import { FallingState } from "./State/FallingState";
-export class Player extends ShapeCollision {
-    constructor(x, y, width, height, other) {
-        super(x, y, width, height);
-        this._idleState = new IdleState();
-        this._walkingState = new WalkingState();
-        this._jumpingState = new JumpingState();
-        this._fallingState = new FallingState();
-        this._currState = this._idleState;
-        this._velocityX = 0;
-        this._velocityY = 0;
-        this._others = other;
+
+export class Player {
+  constructor(x, y, width, height, other, imgSrc, { animations }) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.idleState = new IdleState();
+    this.walkingState = new WalkingState();
+    this.jumpingState = new JumpingState();
+    this.fallingState = new FallingState();
+    this.currState = this.idleState;
+    this.velocityX = 0;
+    this.velocityY = 0;
+    this.others = other;
+    this.sprite = new Image();
+    this.framerate = 11;
+    this.sprite.src = imgSrc;
+    this.frameBuffer = 4;
+    this.frameElapsed = 0;
+    this.sprite.onload = () => {
+      this.loaded = true;
+      this.width = this.sprite.width / this.framerate;
+      this.height = this.sprite.height;
+    };
+    this.currentFrame = 0;
+    this.loaded = false;
+    this.lastDirection = "right";
+  }
+
+  update(manager) {
+    if (manager.isKeyPressed("KeyA")) {
+      this.velocityX = -5;
+    } else if (manager.isKeyPressed("KeyD")) {
+      this.velocityX = 5;
+    } else {
+      this.velocityX = 0;
     }
-    update(manager) {
-        if (manager.isKeyPressed("KeyA")) {
-            this._velocityX = -5;
-        }
-        else if (manager.isKeyPressed("KeyD")) {
-            this._velocityX = 5;
-        }
-        else {
-            this._velocityX = 0;
-        }
-        this._currState.update(this, manager);
+
+    this.currState.update(this, manager);
+  }
+
+  render(ctx) {
+    // ctx.fillStyle = "blue";
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
+    if (this.loaded == false) return;
+    const cropbox = {
+      position: {
+        x: this.width * this.currentFrame,
+        y: 0,
+      },
+      width: this.width,
+      height: this.height,
+    };
+
+    ctx.fillRect(
+      this.hitbox.position.x,
+      this.hitbox.position.y,
+      this.hitbox.width,
+      this.hitbox.height
+    );
+
+    ctx.drawImage(
+      this.sprite,
+      cropbox.position.x,
+      cropbox.position.y,
+      cropbox.width,
+      cropbox.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    this.updateFrames();
+  }
+
+  playerHitbox() {
+    this.hitbox = {
+      position: {
+        x: this.x + 10,
+        y: this.y + 15,
+      },
+      width: 35,
+      height: 35,
+    };
+  }
+
+  updateFrames() {
+    this.frameElapsed++;
+    if (this.frameElapsed % this.frameBuffer === 0) {
+      if (this.currentFrame < this.framerate - 1) {
+        this.currentFrame++;
+      } else {
+        this.currentFrame = 0;
+      }
     }
-    render(ctx) {
-        // console.log(this._y)
-        // console.log(this._x)
-        ctx.fillStyle = "blue";
-        ctx.fillRect(this._x, this._y, this._width, this._height);
+  }
+  checkCollide() {
+    for (let other of this.others) {
+      if (
+        this.hitbox.position.x <= other.x + other.width &&
+        this.hitbox.position.x + this.hitbox.width >= other.x &&
+        this.hitbox.position.y <= other.y + other.height &&
+        this.hitbox.position.y + this.hitbox.height >= other.y
+      ) {
+        return other;
+      }
     }
-    checkCollide() {
-        for (let other of this.others) {
-            if (this.collidesWith(other)) {
-                return other;
-            }
-        }
-        return null;
+    return null;
+  }
+
+  collideX() {
+    let other = this.checkCollide();
+    if (other) {
+      if (this.velocityX < -1) {
+        const offset = this.hitbox.position.x - this.x;
+        this.x = other.x + other.width - offset + 0.25;
+      } else if (this.velocityX > 1) {
+        const offset = this.hitbox.position.x - this.x + this.hitbox.width;
+        this.x = other.x - offset - 0.25;
+      }
     }
-    collideX() {
-        let other = this.checkCollide();
-        if (other) {
-            if (this.velocityX < -1) {
-                this.x = other.x + other.width + 0.25;
-            }
-            else if (this.velocityX > 1) {
-                this.x = other.x - this.width - 0.25;
-            }
-        }
+  }
+
+  collideY() {
+    let other = this.checkCollide();
+    if (other) {
+      if (this.velocityY < 0) {
+        this.velocityY = 0;
+        const offset = this.hitbox.position.y - this.y;
+        this.y = other.y + other.height - offset + 0.5;
+      } else if (this.velocityY > 0) {
+        this.velocityY = 0;
+        const offset = this.hitbox.position.y - this.y + this.hitbox.height;
+        console.log(offset);
+        console.log(other.y);
+        console.log(this.y);
+        console.log(this.height);
+
+        this.y = other.y - offset - 0.01;
+        console.log(this.y);
+      }
+      this.setState(this.idleState);
     }
-    collideY() {
-        let other = this.checkCollide();
-        if (other) {
-            if (this.velocityY < 0) {
-                this.velocityY = 0;
-                this.y = other.y + other.height + 0.01;
-            }
-            else if (this.velocityY > 0) {
-                this.velocityY = 0;
-                this.y = other.y - this.height - 0.01;
-            }
-            this.velocityY = 0;
-            this.setState(this.idleState);
-        }
-    }
-    get others() {
-        return this._others;
-    }
-    get fallingState() {
-        return this._fallingState;
-    }
-    get velocityX() {
-        return this._velocityX;
-    }
-    get velocityY() {
-        return this._velocityY;
-    }
-    set velocityY(velocY) {
-        this._velocityY = velocY;
-    }
-    set velocityX(velocX) {
-        this._velocityX = velocX;
-    }
-    get idleState() {
-        return this._idleState;
-    }
-    get walkingState() {
-        return this._walkingState;
-    }
-    get jumpingState() {
-        return this._jumpingState;
-    }
-    setState(newState) {
-        this._currState = newState;
-        this._currState.enter(this);
-    }
+  }
+
+  setState(newState) {
+    this.currState = newState;
+    this.currState.enter(this);
+  }
 }
