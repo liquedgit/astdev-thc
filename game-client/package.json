@@ -9,5 +9,8 @@
     "serve": "vite preview"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "vite": "^4.5.0"
+  }
 }

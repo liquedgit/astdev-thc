@@ -57,12 +57,12 @@ export class Player {
       height: this.height,
     };
 
-    ctx.fillRect(
-      this.hitbox.position.x,
-      this.hitbox.position.y,
-      this.hitbox.width,
-      this.hitbox.height
-    );
+    // ctx.fillRect(
+    //   this.hitbox.position.x,
+    //   this.hitbox.position.y,
+    //   this.hitbox.width,
+    //   this.hitbox.height
+    // );
 
     ctx.drawImage(
       this.sprite,
