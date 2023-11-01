@@ -2,9 +2,12 @@ import { IdleState } from "./State/IdleState";
 import { JumpingState } from "./State/JumpingState";
 import { WalkingState } from "./State/WalkingState";
 import { FallingState } from "./State/FallingState";
+import { Door } from "../Door/Door";
 
 export class Player {
-  constructor(x, y, width, height, other, imgSrc, { animations }) {
+  GROUND_TOLERANCE = 0.25;
+
+  constructor(x, y, width, height, other, { animations }) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -14,17 +17,19 @@ export class Player {
     this.jumpingState = new JumpingState();
     this.fallingState = new FallingState();
     this.currState = this.idleState;
+    this.lastState = this.idleState;
     this.velocityX = 0;
     this.velocityY = 0;
     this.others = other;
     this.sprite = new Image();
-    this.framerate = 11;
-    this.sprite.src = imgSrc;
-    this.frameBuffer = 4;
+    this.animations = animations;
+    this.frameRate = this.animations["idleRight"].frameRate;
+    this.sprite.src = this.animations["idleRight"].imgSrc;
+    this.frameBuffer = this.animations["idleRight"].frameBuffer;
     this.frameElapsed = 0;
     this.sprite.onload = () => {
       this.loaded = true;
-      this.width = this.sprite.width / this.framerate;
+      this.width = this.sprite.width / this.frameRate;
       this.height = this.sprite.height;
     };
     this.currentFrame = 0;
@@ -41,12 +46,35 @@ export class Player {
       this.velocityX = 0;
     }
 
+    this.playerHitbox();
+    // console.log(this.hitbox);
+    for (let other of this.others) {
+      if (other instanceof Door) {
+        if (
+          this.hitbox.position.x <= other._x + other.width &&
+          this.hitbox.position.x + this.hitbox.width >= other._x &&
+          this.hitbox.position.y <= other._y + other.height &&
+          this.hitbox.position.y + this.hitbox.height >= other._y
+        ) {
+          if (!other.autoplay) {
+            other.play();
+          }
+          if (manager.isKeyPressed("KeyE")) {
+            // console.log("Move stage");
+            other.moveStage(manager);
+          }
+        }
+      }
+    }
+
     this.currState.update(this, manager);
   }
 
   render(ctx) {
     // ctx.fillStyle = "blue";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
+    // console.log(this.loaded);
+    // console.log(this.currState);
     if (this.loaded == false) return;
     const cropbox = {
       position: {
@@ -82,24 +110,26 @@ export class Player {
   playerHitbox() {
     this.hitbox = {
       position: {
-        x: this.x + 10,
-        y: this.y + 15,
+        x: this.x + 55,
+        y: this.y + 35,
       },
-      width: 35,
-      height: 35,
+      width: 60,
+      height: 55,
     };
   }
 
   updateFrames() {
     this.frameElapsed++;
     if (this.frameElapsed % this.frameBuffer === 0) {
-      if (this.currentFrame < this.framerate - 1) {
+      if (this.currentFrame < this.frameRate - 1) {
+        // console.log(this.currentFrame);
         this.currentFrame++;
       } else {
         this.currentFrame = 0;
       }
     }
   }
+
   checkCollide() {
     for (let other of this.others) {
       if (
@@ -107,6 +137,21 @@ export class Player {
         this.hitbox.position.x + this.hitbox.width >= other.x &&
         this.hitbox.position.y <= other.y + other.height &&
         this.hitbox.position.y + this.hitbox.height >= other.y
+      ) {
+        return other;
+      }
+    }
+    return null;
+  }
+
+  checkGroundCollide() {
+    for (let other of this.others) {
+      if (
+        this.hitbox.position.x <= other.x + other.width &&
+        this.hitbox.position.x + this.hitbox.width >= other.x &&
+        this.hitbox.position.y <= other.y + other.height &&
+        this.hitbox.position.y + this.hitbox.height + this.GROUND_TOLERANCE >=
+          other.y
       ) {
         return other;
       }
@@ -137,20 +182,24 @@ export class Player {
       } else if (this.velocityY > 0) {
         this.velocityY = 0;
         const offset = this.hitbox.position.y - this.y + this.hitbox.height;
-        console.log(offset);
-        console.log(other.y);
-        console.log(this.y);
-        console.log(this.height);
 
         this.y = other.y - offset - 0.01;
-        console.log(this.y);
       }
-      this.setState(this.idleState);
+      // this.setState(this.idleState);
     }
   }
 
+  setSprite(animation) {
+    this.frameBuffer = animation.frameBuffer;
+    this.frameRate = animation.frameRate;
+    this.sprite.src = animation.imgSrc;
+    this.loaded = false;
+  }
+
   setState(newState) {
-    this.currState = newState;
-    this.currState.enter(this);
+    if (newState != this.currState) {
+      this.currState = newState;
+      this.currState.enter(this);
+    }
   }
 }

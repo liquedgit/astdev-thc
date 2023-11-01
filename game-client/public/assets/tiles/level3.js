@@ -156,7 +156,7 @@
          "height":9,
          "id":5,
          "name":"Collisions",
-         "opacity":0.22,
+         "opacity":1,
          "type":"tilelayer",
          "visible":true,
          "width":16,
@@ -172,15 +172,15 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled-maps\/tilesets\/Main.tsx"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled\/tilesets\/Main.tsx"
         }, 
         {
          "firstgid":248,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled-maps\/tilesets\/Misc.tsx"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled\/tilesets\/Misc.tsx"
         }, 
         {
          "firstgid":251,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled-maps\/tilesets\/Decorations.tsx"
+         "source":"..\/..\/..\/..\/..\/..\/..\/..\/Downloads\/tiled\/tilesets\/Decorations.tsx"
         }],
  "tilewidth":64,
  "type":"map",

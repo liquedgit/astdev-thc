@@ -1,9 +1,10 @@
 import { CollisionBlock } from "../Collision/CollisionBlock";
+import { Door } from "../Door/Door";
 import { Player } from "../player/Player";
 import { Sprite } from "../utils/Sprite";
 export class Stage extends Sprite {
-  constructor({ position, imgSrc, parsedCollision }) {
-    super({ position, imgSrc });
+  constructor({ player, door, position, sprite, parsedCollision }) {
+    super({ position, sprite });
     this._entities = [];
     parsedCollision.forEach((row, y) => {
       row.forEach((symbol, x) => {
@@ -20,20 +21,47 @@ export class Stage extends Sprite {
       });
     });
     this._entities.push(
+      new Door({
+        position: {
+          x: door.position.x,
+          y: door.position.y,
+        },
+        sprite: {
+          frameBuffer: 20,
+          frameRate: 5,
+          imgSrc: "../../assets/Sprites/11-Door/doorOpen.png",
+          loop: false,
+        },
+      })
+    );
+    this._entities.push(
       new Player(
-        200,
-        200,
+        player.position.x,
+        player.position.y,
         25,
         25,
         this._entities.slice(),
-        "../../assets/Sprites/01-King Human/Idle (78x58).png",
         {
           animations: {
             idleRight: {
               frameRate: 11,
-              frameBuffer: 2,
-              loop: true,
-              imgSrc: "../../assets/Sprites/01-King Human/",
+              frameBuffer: 5,
+              imgSrc: "../../assets/Sprites/01-King Human/idle.png",
+            },
+            idleLeft: {
+              frameRate: 11,
+              frameBuffer: 5,
+              imgSrc: "../../assets/Sprites/01-King Human/idleLeft.png",
+            },
+            runLeft: {
+              frameRate: 8,
+              frameBuffer: 10,
+              imgSrc: "../../assets/Sprites/01-King Human/runLeft.png",
+            },
+            runRight: {
+              frameRate: 8,
+              frameBuffer: 10,
+              imgSrc: "../../assets/Sprites/01-King Human/runRight.png",
             },
           },
         }

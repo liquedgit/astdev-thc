@@ -1,8 +1,6 @@
 import { PlayerBaseState } from "../PlayerBaseState";
 export class FallingState extends PlayerBaseState {
-  enter(player) {
-    console.log("Falling");
-  }
+  enter(player) {}
   update(player, manager) {
     player.x += player.velocityX;
     player.playerHitbox();
@@ -11,5 +9,8 @@ export class FallingState extends PlayerBaseState {
     player.velocityY += 0.2;
     player.playerHitbox();
     player.collideY();
+    if (player.velocityY <= 0) {
+      player.setState(player.idleState);
+    }
   }
 }

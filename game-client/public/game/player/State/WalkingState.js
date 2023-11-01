@@ -1,6 +1,14 @@
 import { PlayerBaseState } from "../PlayerBaseState";
 export class WalkingState extends PlayerBaseState {
-  enter(player) {}
+  enter(player) {
+    if (player.velocityX > 0) {
+      player.setSprite(player.animations["runRight"]);
+      player.lastDirection = "right";
+    } else if (player.velocityX < 0) {
+      player.setSprite(player.animations["runLeft"]);
+      player.lastDirection = "left";
+    }
+  }
   update(player, manager) {
     if (player.velocityX == 0) {
       player.setState(player.idleState);
