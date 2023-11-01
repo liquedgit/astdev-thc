@@ -3,6 +3,7 @@ import { JumpingState } from "./State/JumpingState";
 import { WalkingState } from "./State/WalkingState";
 import { FallingState } from "./State/FallingState";
 import { Door } from "../Door/Door";
+import { Sign } from "../Sign/Sign";
 
 export class Player {
   GROUND_TOLERANCE = 0.25;
@@ -49,20 +50,27 @@ export class Player {
     this.playerHitbox();
     // console.log(this.hitbox);
     for (let other of this.others) {
-      if (other instanceof Door) {
-        if (
-          this.hitbox.position.x <= other._x + other.width &&
-          this.hitbox.position.x + this.hitbox.width >= other._x &&
-          this.hitbox.position.y <= other._y + other.height &&
-          this.hitbox.position.y + this.hitbox.height >= other._y
-        ) {
+      if (
+        this.hitbox.position.x <= other._x + other.width &&
+        this.hitbox.position.x + this.hitbox.width >= other._x &&
+        this.hitbox.position.y <= other._y + other.height &&
+        this.hitbox.position.y + this.hitbox.height >= other._y
+      ) {
+        if (other instanceof Door) {
           if (!other.autoplay) {
             other.play();
           }
           if (manager.isKeyPressed("KeyE")) {
-            // console.log("Move stage");
             other.moveStage(manager);
           }
+        } else if (other instanceof Sign) {
+          other.playSound();
+          other.showModal(manager);
+          let deletedObj = other;
+          this.others = this.others.filter(
+            (deleted) => !(deleted instanceof Sign && deleted === deletedObj)
+          );
+          manager._currentStages.removeSign(deletedObj);
         }
       }
     }

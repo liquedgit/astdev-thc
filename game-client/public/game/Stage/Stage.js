@@ -1,10 +1,12 @@
 import { CollisionBlock } from "../Collision/CollisionBlock";
 import { Door } from "../Door/Door";
+import { Sign } from "../Sign/Sign";
 import { Player } from "../player/Player";
 import { Sprite } from "../utils/Sprite";
 export class Stage extends Sprite {
-  constructor({ player, door, position, sprite, parsedCollision }) {
+  constructor({ signs, player, door, position, sprite, parsedCollision }) {
     super({ position, sprite });
+    console.log(signs);
     this._entities = [];
     parsedCollision.forEach((row, y) => {
       row.forEach((symbol, x) => {
@@ -20,6 +22,26 @@ export class Stage extends Sprite {
         }
       });
     });
+    for (let sign of signs) {
+      console.log(sign);
+      this._entities.push(
+        new Sign({
+          modalid: sign.modalid,
+          position: {
+            x: sign.position.x,
+            y: sign.position.y,
+          },
+          sprite: {
+            frameBuffer: 10,
+            frameRate: 10,
+            imgSrc:
+              "../../assets/Sprites/12-Live and Coins/Big Diamond Idle (18x14).png",
+            loop: true,
+          },
+          autoplay: true,
+        })
+      );
+    }
     this._entities.push(
       new Door({
         position: {
@@ -68,6 +90,13 @@ export class Stage extends Sprite {
       )
     );
   }
+
+  removeSign(obj) {
+    this._entities = this._entities.filter(
+      (other) => !(other instanceof Sign && other === obj)
+    );
+  }
+
   addEntities(newEntity) {
     this._entities.push(newEntity);
   }

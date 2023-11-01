@@ -11,9 +11,32 @@ export class GameManager {
     this._ctx = this._canvas.getContext("2d");
     this._stages = [
       new Stage({
+        signs: [
+          {
+            position: {
+              x: 577,
+              y: 350,
+            },
+            modalid: "profileModal",
+          },
+          {
+            position: {
+              x: 477,
+              y: 350,
+            },
+            modalid: "profileModal",
+          },
+          {
+            position: {
+              x: 377,
+              y: 350,
+            },
+            modalid: "profileModal",
+          },
+        ],
         player: {
           position: {
-            x: 290,
+            x: 150,
             y: 290,
           },
         },
@@ -36,6 +59,22 @@ export class GameManager {
         parsedCollision: PARSED_COLLISION_LEVEL_1,
       }),
       new Stage({
+        signs: [
+          {
+            position: {
+              x: 577,
+              y: 373,
+            },
+            modalid: "profileModal",
+          },
+          {
+            position: {
+              x: 452,
+              y: 372,
+            },
+            modalid: "profileModal",
+          },
+        ],
         player: {
           position: {
             x: 100,
@@ -61,6 +100,22 @@ export class GameManager {
         parsedCollision: PARSED_COLLISION_LEVEL_2,
       }),
       new Stage({
+        signs: [
+          {
+            position: {
+              x: 577,
+              y: 373,
+            },
+            modalid: "profileModal",
+          },
+          {
+            position: {
+              x: 452,
+              y: 372,
+            },
+            modalid: "profileModal",
+          },
+        ],
         player: {
           position: {
             x: 647,
@@ -120,6 +175,10 @@ export class GameManager {
   run() {
     this.update();
     this.render();
-    requestAnimationFrame(this.run.bind(this));
+    this.animate = requestAnimationFrame(this.run.bind(this));
+  }
+
+  pause() {
+    cancelAnimationFrame(this.animate);
   }
 }

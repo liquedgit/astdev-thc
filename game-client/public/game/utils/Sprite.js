@@ -34,8 +34,7 @@ export class Sprite {
       height: this.height,
     };
 
-    // ctx.drawImage(this._image, this._x, this._y, this.width, this.height);
-    if (this.frameRate == 4) {
+    if (this.frameRate == 5) {
     }
     ctx.drawImage(
       this._image,
