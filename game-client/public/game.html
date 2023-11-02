@@ -22,12 +22,109 @@
 
 
 <body>
-    <div class="profileModal">
-        <div class="profileModal-backdrop">
-            <div class="profileModal-header">
+    <div class="whyMeModal" id="whyMeModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closewhyMeModal">&#10006;</span>
+            <div class="modal-header">
+                <h1>Why me ?</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="newTpaModal" id="newTpaModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closenewTpaModal">&#10006;</span>
+            <div class="modal-header">
+                <h1>New TPA ?</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="inovationModal" id="inovationModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closeInovationModal">&#10006;</span>
+            <div class="modal-header">
+                <h1>My Inovation</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="workplanModal2" id="workplanModal2">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closeworkP2Modal">&#10006;</span>
+            <div class="modal-header">
+                <h1>Workplan Second Semester</h1>
+            </div>
+            <div class="split-modal-content">
+                <div class="wp-left-content">
+                    <h2>24-1 Generation</h2>
+                    <h3 class="bold">TPA Web Technology (Web & AI)</h3>
+                    <h3>TPA IOT using AI</h3>
+                    <h3>TPA Network</h3>
+                </div>
+                <div class="wp-right-content">
+                    <h2>24-2 Generation</h2>
+                    <h3>TPA Game Technology</h3>
+                    <h3>TPA Desktop (Electron)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="workplanModal" id="workplanModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closeworkPModal">&#10006;</span>
+            <div class="modal-header">
+                <h1>Workplan First Semester</h1>
+            </div>
+            <div class="split-modal-content">
+                <div class="wp-left-content">
+                    <h2>23-2 Generation</h2>
+                    <h3>TPA Web Technology (Web & AI)</h3>
+                    <h3>TPA Mobile (Android)</h3>
+                    <h3>TPA Network & IOT</h3>
+                </div>
+                <div class="wp-right-content">
+                    <h2>24-1 Generation</h2>
+                    <h3 class="bold">TPA Game (Unity)</h3>
+                    <h3>TPA Desktop (Electron)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="advModal" id="advModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closeAdvModal">&#10006;</span>
+
+            <div class="modal-header">
+                <h1>Advatages vs Disadvantages</h1>
+            </div>
+            <div class="split-modal-content">
+                <div class="adv-left-content">
+                    <h2>Advantages</h2>
+                    <li class="bold">Communication Skillset</li>
+                    <li class="bold">Flexible</li>
+                    <li class="bold">Love to learn new stuff</li>
+                </div>
+                <div class="adv-right-content">
+                    <h2>Disadvantages</h2>
+                    <li class="bold">High risk</li>
+                    <li class="bold">Overthinking</li>
+                    <li class="bold">Not patient</li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profileModal" id="profileModal">
+        <div class="modal-backdrop">
+            <span class="modal-close-btn" id="closeProfileBtn">&#10006;</span>
+
+            <div class="modal-header">
                 <h1>PROFILE</h1>
             </div>
-            <div class="profileModal-content">
+            <div class="split-modal-content">
                 <div class="profile-left-content">
                     <img src="./assets/htmlasset/profile2.jpg" class="profile-image" alt="asdsad">
                 </div>
@@ -50,15 +147,15 @@
                                 <li class="bold">Golang</li>
                                 <li class="bold">Mobile Development</li>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <canvas id="canvas"></canvas>
+    <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
 </body>
 <script src="./game/index.js" type="module"></script>
 

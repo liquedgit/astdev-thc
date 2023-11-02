@@ -17,9 +17,13 @@ export class Sign extends Sprite {
 
   showModal(manager) {
     let modal = document.getElementsByClassName(this.modalid);
-    console.log(modal);
     modal.set;
     modal[0].style.display = "flex";
-    manager.pause.bind(manager);
+    modal[0].style.opacity = "0";
+    setTimeout(() => {
+      modal[0].style.opacity = "1";
+    }, 0);
+    modal[0].classList.add("fade-in");
+    manager.pause();
   }
 }

@@ -6,9 +6,10 @@ export class GameManager {
   constructor() {
     this.keys = {};
     this._canvas = document.querySelector("canvas");
-    this._canvas.width = window.innerWidth;
-    this._canvas.height = window.innerHeight;
+    this._canvas.width = window.innerWidth - 100;
+    this._canvas.height = 1024;
     this._ctx = this._canvas.getContext("2d");
+    this._ctx.scale(1.2, 1.2);
     this._stages = [
       new Stage({
         signs: [
@@ -17,14 +18,7 @@ export class GameManager {
               x: 577,
               y: 350,
             },
-            modalid: "profileModal",
-          },
-          {
-            position: {
-              x: 477,
-              y: 350,
-            },
-            modalid: "profileModal",
+            modalid: "advModal",
           },
           {
             position: {
@@ -62,17 +56,24 @@ export class GameManager {
         signs: [
           {
             position: {
-              x: 577,
-              y: 373,
+              x: 600,
+              y: 473,
             },
-            modalid: "profileModal",
+            modalid: "inovationModal",
           },
           {
             position: {
-              x: 452,
-              y: 372,
+              x: 500,
+              y: 473,
             },
-            modalid: "profileModal",
+            modalid: "workplanModal2",
+          },
+          {
+            position: {
+              x: 400,
+              y: 473,
+            },
+            modalid: "workplanModal",
           },
         ],
         player: {
@@ -103,17 +104,17 @@ export class GameManager {
         signs: [
           {
             position: {
-              x: 577,
+              x: 600,
               y: 373,
             },
-            modalid: "profileModal",
+            modalid: "newTpaModal",
           },
           {
             position: {
-              x: 452,
+              x: 400,
               y: 372,
             },
-            modalid: "profileModal",
+            modalid: "whyMeModal",
           },
         ],
         player: {
@@ -145,7 +146,6 @@ export class GameManager {
     this._currentStages = this._stages[this.indexStage];
     this._gravity = 2;
     document.addEventListener("keydown", (event) => {
-      // console.log(event.code);
       this.keys[event.code] = true;
     });
     document.addEventListener("keyup", (event) => {
@@ -153,7 +153,6 @@ export class GameManager {
     });
   }
   isKeyPressed(keyCode) {
-    if (keyCode === "KeyE") console.log(this.keys[keyCode]);
     return this.keys[keyCode] === true;
   }
   get gravity() {
@@ -164,12 +163,11 @@ export class GameManager {
   }
   update() {
     this._currentStages.update(this);
-    // console.log(this._currentStages)
   }
   render() {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-    this._ctx.fillStyle = "white";
-    this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    // this._ctx.fillStyle = "black";
+    // this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this._currentStages.render(this._ctx);
   }
   run() {
@@ -178,7 +176,12 @@ export class GameManager {
     this.animate = requestAnimationFrame(this.run.bind(this));
   }
 
+  resume() {
+    this.isPaused = false;
+  }
+
   pause() {
     cancelAnimationFrame(this.animate);
+    this.isPaused = true;
   }
 }

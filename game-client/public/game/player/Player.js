@@ -48,7 +48,6 @@ export class Player {
     }
 
     this.playerHitbox();
-    // console.log(this.hitbox);
     for (let other of this.others) {
       if (
         this.hitbox.position.x <= other._x + other.width &&
@@ -81,8 +80,7 @@ export class Player {
   render(ctx) {
     // ctx.fillStyle = "blue";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
-    // console.log(this.loaded);
-    // console.log(this.currState);
+
     if (this.loaded == false) return;
     const cropbox = {
       position: {
@@ -130,7 +128,6 @@ export class Player {
     this.frameElapsed++;
     if (this.frameElapsed % this.frameBuffer === 0) {
       if (this.currentFrame < this.frameRate - 1) {
-        // console.log(this.currentFrame);
         this.currentFrame++;
       } else {
         this.currentFrame = 0;

@@ -7,7 +7,6 @@ export class Sprite {
     this.frameBuffer = sprite.frameBuffer;
     this._image.src = sprite.imgSrc;
     this.loop = sprite.loop;
-    console.log(this.frameRate);
     this._image.onload = () => {
       this._loaded = true;
       this.width = this._image.width / this.frameRate;
@@ -61,7 +60,6 @@ export class Sprite {
       if (this.currentFrame < this.frameRate - 1) {
         this.currentFrame++;
       } else if (this.loop) {
-        console.log("asas");
         this.currentFrame = 0;
       }
     }

@@ -1,25 +1,42 @@
-.profileModal{
+.inovationModal,.newTpaModal,.whyMeModal,.workplanModal,.workplanModal2,.advModal,.profileModal{
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-   /* color: red; */
+    background-color: rgba(28, 28, 28, 0.651);
     z-index: 0; 
     justify-content: center;
     align-items: center;
 }
 
-.profileModal-backdrop{
+.workplanModal2{
+    display: flex;
+}
+
+.modal-backdrop{
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 50%;
-    height: 80%;
-    background-color: rgb(43, 37, 37);
+    height: 60%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     border-radius: 2vh;
     padding: 2vh;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.modal-close-btn{
+    cursor: pointer;
+}
+
+.fade-in {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-out{
+    transition: opacity 0.3s ease-in-out;
 }
 
 
@@ -42,7 +59,7 @@
     margin-right: 10vh;
 }
 
-.profileModal-content{
+.split-modal-content{
     width: 100%;
     height: 50%;
     display: flex;
@@ -52,7 +69,7 @@
 
 .profile-left-content{
     width: 20%;
-    height: 50%;
+    height: 70%;
     overflow: hidden;
 }
 
@@ -68,17 +85,48 @@
 .profile-right-content{
     width: 70%;
     height: 100%;
+    position: relative;
 }
 
-.profileModal-header{
+.modal-header{
     text-align: center;
 }
 
+
+.adv-left-content{
+    width: 50%;
+    font-size: 2.5vh;
+    margin-left: 15vh;
+}
+
+.adv-right-content{
+    width: 50%;
+    font-size: 2.5vh;
+}
+
+
+.wp-left-content{
+    width: 50%;
+    margin-left: 10vh;
+}
+
+.wp-right-content{
+    width: 50%;
+}
 
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-color: #3f3851;
 
+}
+
+.canvas-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #3f3851;
 }

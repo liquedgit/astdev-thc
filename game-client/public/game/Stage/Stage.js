@@ -6,7 +6,6 @@ import { Sprite } from "../utils/Sprite";
 export class Stage extends Sprite {
   constructor({ signs, player, door, position, sprite, parsedCollision }) {
     super({ position, sprite });
-    console.log(signs);
     this._entities = [];
     parsedCollision.forEach((row, y) => {
       row.forEach((symbol, x) => {
@@ -23,7 +22,6 @@ export class Stage extends Sprite {
       });
     });
     for (let sign of signs) {
-      console.log(sign);
       this._entities.push(
         new Sign({
           modalid: sign.modalid,
