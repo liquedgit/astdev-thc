@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index</title>
     <link rel="stylesheet" href="./game.css">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
 </head>
 <!-- <style>
         body,
@@ -22,11 +24,18 @@
 
 
 <body>
+
     <div class="whyMeModal" id="whyMeModal">
         <div class="modal-backdrop">
             <span class="modal-close-btn" id="closewhyMeModal">&#10006;</span>
             <div class="modal-header">
                 <h1>Why me ?</h1>
+            </div>
+            <div class="modal-content">
+                <h3>I think why you should choose me is because i am a passionate person. I always wanted to learn new
+                    stuff out there. Besides that i would love to works and help assistant to improve themself.</h3>
+                <h3>For me, there is no limitation to learn new stuff. I have many plans to help Assistant to be better
+                    in everyway.</h3>
             </div>
         </div>
     </div>
@@ -37,6 +46,15 @@
             <div class="modal-header">
                 <h1>New TPA ?</h1>
             </div>
+            <div class="modal-content">
+                <h3>Given that Bina Nusantara University has introduced an Artificial Intelligence major, I believe we
+                    need to update the TPA material. The urgency stems from the fact that next semester, we will require
+                    assistants to teach Artificial Intelligence courses.
+                </h3>
+                <h3>To better equip these assistants with knowledge about Artificial Intelligence, I will update the
+                    TPA material to align with the latest major courses, which are: IOT (Mobile & IOT), Machine Learning
+                    (Game Technology), and Deep Learning (Web Technology).</h3>
+            </div>
         </div>
     </div>
 
@@ -45,6 +63,16 @@
             <span class="modal-close-btn" id="closeInovationModal">&#10006;</span>
             <div class="modal-header">
                 <h1>My Inovation</h1>
+            </div>
+            <div class="model-content">
+                <h1>Program kerja</h1>
+                <li class="bold">Update TPA Material / Component</li>
+                <li class="bold">Changed TPA Mobile to TPA Mobile & IOT</li>
+                <li class="bold">Changed TPA Game to TPA Game Technology (Machine Learning)</li>
+                <h1>Features</h1>
+                <li class="bold">Create a Chat bot to answer FAQ about currently on progress TPA</li>
+                <small>This will help Assistant Development to not answer a question that already been answered
+                    before</small>
             </div>
         </div>
     </div>
@@ -58,14 +86,34 @@
             <div class="split-modal-content">
                 <div class="wp-left-content">
                     <h2>24-1 Generation</h2>
-                    <h3 class="bold">TPA Web Technology (Web & AI)</h3>
-                    <h3>TPA IOT using AI</h3>
-                    <h3>TPA Network</h3>
+                    <div class="flex wp-container">
+                        <dotlottie-player src="./assets/animation/web_technology.lottie" background="transparent"
+                            speed="1" style="width: 150px;height: 150px;" loop autoplay></dotlottie-player>
+                        <h3 class="bold">Web Technology</h3>
+                    </div>
+                    <div class="flex wp-container" style="margin-top: 2vh;">
+                        <h3>Mobile & IOT</h3>
+                        <dotlottie-player src="./assets/animation/iot_ai_animation.lottie" background="transparent"
+                            speed="1" style="width: 200px;height: 200px;" loop autoplay></dotlottie-player>
+                    </div>
+                    <div class="flex wp-container" style="margin-top: 2vh;">
+                        <dotlottie-player src="./assets/animation/network.lottie" background="transparent" speed="1"
+                            style="width: 200px;height: 200px;" loop autoplay></dotlottie-player>
+                        <h3>Network</h3>
+                    </div>
                 </div>
                 <div class="wp-right-content">
                     <h2>24-2 Generation</h2>
-                    <h3>TPA Game Technology</h3>
-                    <h3>TPA Desktop (Electron)</h3>
+                    <div class="flex wp-container">
+                        <h3>Game Technology</h3>
+                        <dotlottie-player src="./assets/animation/game_ai_animation.lottie" background="transparent"
+                            speed="1" style="width: 200px;height: 200px;" loop autoplay></dotlottie-player>
+                    </div>
+                    <div class="flex wp-container" style="margin-top: 5vh;">
+                        <dotlottie-player src="./assets/animation/desktop_animation.lottie" background="transparent"
+                            speed="1" style="width: 200px;height: 200px;" loop autoplay></dotlottie-player>
+                        <h3>Desktop (Electron)</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,14 +128,36 @@
             <div class="split-modal-content">
                 <div class="wp-left-content">
                     <h2>23-2 Generation</h2>
-                    <h3>TPA Web Technology (Web & AI)</h3>
-                    <h3>TPA Mobile (Android)</h3>
-                    <h3>TPA Network & IOT</h3>
+                    <div class="flex wp-container">
+                        <dotlottie-player src="./assets/animation/web_technology.lottie" background="transparent"
+                            speed="1" style="width: 150px;height: 150px;" loop autoplay></dotlottie-player>
+                        <h3 class="bold">Web Technology</h3>
+                    </div>
+                    <div class="flex wp-container">
+                        <h3>Mobile & IOT</h3>
+                        <dotlottie-player src="./assets/animation/iot_ai_animation.lottie" background="transparent"
+                            speed="1" style="width: 150px; height: 200px;margin-left: 10vh;" loop
+                            autoplay></dotlottie-player>
+
+                    </div>
+                    <div class="flex wp-container">
+                        <dotlottie-player src="./assets/animation/network.lottie" background="transparent" speed="1"
+                            style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                        <h3>Network</h3>
+                    </div>
                 </div>
                 <div class="wp-right-content">
                     <h2>24-1 Generation</h2>
-                    <h3 class="bold">TPA Game (Unity)</h3>
-                    <h3>TPA Desktop (Electron)</h3>
+                    <div class="flex wp-container">
+                        <h3>TPA Game (Unity)</h3>
+                        <dotlottie-player src="./assets/animation/game_animation.lottie" background="transparent"
+                            speed="1" style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                    </div>
+                    <div class="flex wp-container" style="margin-top: 5vh;">
+                        <dotlottie-player src="./assets/animation/desktop_animation.lottie" background="transparent"
+                            speed="1" style="width: 200px; height: 200px;" loop autoplay></dotlottie-player>
+                        <h3>TPA Desktop (Electron)</h3>
+                    </div>
                 </div>
             </div>
         </div>

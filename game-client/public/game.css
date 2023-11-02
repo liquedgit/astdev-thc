@@ -11,8 +11,15 @@
     align-items: center;
 }
 
-.workplanModal2{
+.whyMeModal{
     display: flex;
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-backdrop{
@@ -29,6 +36,20 @@
 
 .modal-close-btn{
     cursor: pointer;
+}
+
+
+.wp-container{
+    max-height: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.flex{
+    display: flex;
 }
 
 .fade-in {
@@ -106,12 +127,11 @@
 
 
 .wp-left-content{
-    width: 50%;
-    margin-left: 10vh;
+    width: 55%;
 }
 
 .wp-right-content{
-    width: 50%;
+    width: 45%;
 }
 
 html, body {
