@@ -39,6 +39,14 @@ export class Player {
   }
 
   update(manager) {
+    manager.sendData({
+      id: manager.id,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      current_stage: manager.indexStage,
+    });
     if (manager.isKeyPressed("KeyA")) {
       this.velocityX = -5;
     } else if (manager.isKeyPressed("KeyD")) {

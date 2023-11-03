@@ -10,5 +10,6 @@ export class Door extends Sprite {
     this.moved = true;
     manager.indexStage++;
     manager._currentStages = manager._stages[manager.indexStage];
+    manager.backendPlayers = [];
   }
 }

@@ -1,10 +1,14 @@
 import { PARSED_COLLISION_LEVEL_2 } from "./Collision/ConstantCollision";
 import { PARSED_COLLISION_LEVEL_3 } from "./Collision/ConstantCollision";
 import { PARSED_COLLISION_LEVEL_1 } from "./Collision/ConstantCollision";
+import { ConnectedPlayer } from "./ConnectedPlayers/ConnectedPlayer";
 import { Stage } from "./Stage/Stage";
 export class GameManager {
-  constructor() {
+  constructor(id, ws) {
+    this.id = id;
     this.keys = {};
+    this.ws = ws;
+    this.backendPlayers = [];
     this._canvas = document.querySelector("canvas");
     this._canvas.width = window.innerWidth - 100;
     this._canvas.height = 1024;
@@ -152,6 +156,76 @@ export class GameManager {
       this.keys[event.code] = false;
     });
   }
+
+  sendData(obj) {
+    let jsonStr = JSON.stringify(obj);
+    // console.log(jsonStr);
+    this.ws.send(jsonStr);
+  }
+
+  receiveConnectedPlayerData(data) {
+    let jsonObj = JSON.parse(data);
+
+    if (jsonObj.id !== this.id) {
+      const playerIndex = this.backendPlayers.findIndex(
+        (obj) => obj.id === jsonObj.id
+      );
+      const playerExists = playerIndex !== -1;
+      const player = playerExists ? this.backendPlayers[playerIndex] : null;
+
+      if (!playerExists) {
+        this.backendPlayers.push(jsonObj);
+        if (this.indexStage === jsonObj.current_stage) {
+          this._currentStages.addEntities(
+            new ConnectedPlayer(
+              jsonObj.x,
+              jsonObj.y,
+              jsonObj.width,
+              jsonObj.height,
+              jsonObj.id,
+              jsonObj.current_stage
+            )
+          );
+        }
+      } else {
+        if (player.current_stage !== jsonObj.current_stage) {
+          if (this.indexStage === jsonObj.current_stage) {
+            this._currentStages.addEntities(
+              new ConnectedPlayer(
+                jsonObj.x,
+                jsonObj.y,
+                jsonObj.width,
+                jsonObj.height,
+                jsonObj.id,
+                jsonObj.current_stage
+              )
+            );
+          } else if (this.indexStage === player.current_stage) {
+            this._currentStages._entities =
+              this._currentStages._entities.filter(
+                (obj) => obj.id !== jsonObj.id
+              );
+          }
+
+          this.backendPlayers[playerIndex].current_stage =
+            jsonObj.current_stage;
+        }
+
+        if (jsonObj.current_stage === this.indexStage) {
+          let entity = this._currentStages._entities.find(
+            (e) => e.id === jsonObj.id
+          );
+          if (entity) {
+            entity.x = jsonObj.x;
+            entity.y = jsonObj.y;
+            entity.height = jsonObj.height;
+            entity.width = jsonObj.width;
+          }
+        }
+      }
+    }
+  }
+
   isKeyPressed(keyCode) {
     return this.keys[keyCode] === true;
   }
@@ -166,8 +240,6 @@ export class GameManager {
   }
   render() {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-    // this._ctx.fillStyle = "black";
-    // this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this._currentStages.render(this._ctx);
   }
   run() {
