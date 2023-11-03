@@ -32,8 +32,6 @@ struct Connect {
     addr: Addr<MyWs>,
 }
 
-
-
 struct WServer{
     sessions : HashMap<Uuid, Addr<MyWs>>,
 }
